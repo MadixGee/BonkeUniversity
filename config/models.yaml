@@ -1,0 +1,21 @@
+# Model tiering + hard budget caps (see Architecture Design Document §12).
+# Models are CONFIG, not code — swap them as better models ship over the years.
+# Caps are enforced per-agent via the platform's maxBudgetUsd. They sum < $50 by design.
+
+tiers:
+  cheap:  # bookkeeping, source pre-filtering, notifications
+    role: "fast/inexpensive; high-volume low-stakes"
+  mid:    # lectures, assignments, grading, code review
+    role: "balanced; the workhorse"
+  top:    # curriculum planning, architecture review
+    role: "deep reasoning; used rarely, where judgment matters"
+
+agents:
+  dean:                 { tier: mid,        max_budget_usd: 5 }
+  curriculum_designer:  { tier: top,        max_budget_usd: 8 }
+  faculty:              { tier: mid,        max_budget_usd: 12 }
+  grader:               { tier: mid,        max_budget_usd: 6 }
+  reviewer:             { tier: mid+top,    max_budget_usd: 12 }   # code=mid, arch=top
+  registrar:            { tier: cheap+mid,  max_budget_usd: 3 }
+
+ceiling_usd: 46          # hard sum; expected actual spend ~$8-15/mo

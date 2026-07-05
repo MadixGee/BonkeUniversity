@@ -1,0 +1,21 @@
+# Cadence (see Architecture Design Document §8). Cloud-hosted so it runs when your computer is off.
+# V1 = MANUAL trigger only. Turn these on in V2.
+
+v1:
+  mode: manual            # you run the Dean yourself while proving the loop
+
+v2:
+  weekly_cycle:
+    rrule: "FREQ=WEEKLY;BYDAY=SU;BYHOUR=8;BYMINUTE=0"
+    runs: [dean]          # dean -> gate check -> (curriculum if boundary) -> faculty -> digest
+  midweek_check:
+    rrule: "FREQ=WEEKLY;BYDAY=WE;BYHOUR=18;BYMINUTE=0"
+    read_only: true
+  quarterly_audit:
+    rrule: "FREQ=WEEKLY;INTERVAL=13;BYDAY=SU"
+    read_only: true
+
+event_driven:
+  on_submission: [grader, reviewer]     # fire when YOU push/submit, not on a timer
+  on_module_boundary: [curriculum_designer]
+  after_assessment: [registrar]
