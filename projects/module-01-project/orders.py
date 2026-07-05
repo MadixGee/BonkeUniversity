@@ -1,23 +1,23 @@
 def calc(o):
-    t = 0
+    invoiceTotal = 0
     for i in o["items"]:
-        t = t + i["p"] * i["q"]
+        invoiceTotal = invoiceTotal + i["p"] * i["q"]
     # discount
-    if t > 100:
+    if invoiceTotal > 100:
         if o["c"] == "gold":
-            t = t - t * 0.15
+            invoiceTotal = invoiceTotal - invoiceTotal * 0.15
         else:
-            t = t - t * 0.05
+            invoiceTotal = invoiceTotal - invoiceTotal * 0.05
     else:
         if o["c"] == "gold":
-            t = t - t * 0.10
+            invoiceTotal = invoiceTotal - invoiceTotal * 0.10
     # tax
-    t = t + t * 0.2
+    t = invoiceTotal + invoiceTotal  * 0.2
     # shipping
-    if t < 50:
-        t = t + 9.99
+    if invoiceTotal < 50:
+        invoiceTotal = invoiceTotal + 9.99
     else:
-        t = t + 0
+        invoiceTotal = invoiceTotal + 0
     return round(t, 2)
 
 # ad-hoc "tests"
