@@ -1,0 +1,25 @@
+weeks:
+  - weekId: 2026-W29
+    topic: "Computer systems fundamentals"
+  - weekId: 2026-W30
+    topic: "Data structures and algorithms"
+  - weekId: 2026-W31
+    topic: "Networking basics"
+  - weekId: 2026-W32
+    topic: "Operating systems concepts"
+  - weekId: 2026-W33
+    topic: "Databases and persistence"
+  - weekId: 2026-W34
+    topic: "Backend service design"
+  - weekId: 2026-W35
+    topic: "API design and contracts"
+  - weekId: 2026-W36
+    topic: "Distributed systems foundations"
+  - weekId: 2026-W37
+    topic: "Reliability and observability"
+  - weekId: 2026-W38
+    topic: "Security fundamentals"
+  - weekId: 2026-W39
+    topic: "Software architecture patterns"
+  - weekId: 2026-W40
+    topic: "System design and trade-offs"
