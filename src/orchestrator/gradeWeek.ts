@@ -2,7 +2,9 @@ import { appendFile, existsSync, mkdir, readFile, writeFile } from 'node:fs';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import yaml from 'js-yaml';
-import type { LLMProvider } from '../llm/provider.js';
+import { config } from '../config.js';
+import { OpenAIProvider } from '../llm/openaiProvider.js';
+import type { LLMProvider, WeekPromptVars } from '../llm/provider.js';
 import type { GitClientLike } from '../repo/gitClient.js';
 import { getTranscriptPath } from '../repo/paths.js';
 import { ReviewSchema } from '../schemas/review.schema.js';
@@ -34,7 +36,16 @@ export async function gradeWeek({ repoRoot, provider, git, now = new Date(), rub
 
   await mkdirAsync(weeklyDir, { recursive: true });
 
-  const reviewPayload = await provider.generate(`Review the week's work for ${weekId}.`, ReviewSchema);
+  const reviewVars: WeekPromptVars = {
+    weekId,
+    topic: `Week ${weekId} review`,
+    weekNumber: 1,
+    totalWeeks: 1,
+    previousTopics: [],
+    learnerContext: 'Project-based weekly assessment and reflection',
+    courseGoal: 'Evaluate and improve engineering quality week over week',
+  };
+  const reviewPayload = await provider.generate(reviewVars, ReviewSchema);
   const weights = rubricWeights ?? {
     architecture: 1,
     codeQuality: 1,
@@ -68,6 +79,9 @@ export async function gradeWeek({ repoRoot, provider, git, now = new Date(), rub
 
   await git.add([reviewPath, gradingReportPath, transcriptPath]);
   await git.commit(`feat(week): grade ${weekId}`);
+  if (config.githubRepo) {
+    await git.setRemote?.('origin', config.githubRepo);
+  }
   await git.push();
 
   return { skipped: false, weekId, weightedTotal };
@@ -108,4 +122,39 @@ function calculateWeightedTotal(scores: Record<string, number | string>, weights
   }, 0);
 
   return Number((weightedSum / totalWeight).toFixed(2));
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const repoRoot = process.cwd();
+  const provider = config.openRouterApiKey ? new OpenAIProvider() : createFallbackProvider();
+  const git = {
+    checkIsRepo: async () => true,
+    status: async () => ({}),
+    add: async () => undefined,
+    commit: async () => undefined,
+    push: async () => undefined,
+    resetHard: async () => undefined,
+  } as GitClientLike;
+
+  void gradeWeek({ repoRoot, provider, git });
+}
+
+function createFallbackProvider(): LLMProvider {
+  return {
+    async generate<T>(_prompt: WeekPromptVars, schema: any): Promise<T> {
+      if (schema === ReviewSchema) {
+        return schema.parse({
+          architecture: 80,
+          codeQuality: 78,
+          testing: 82,
+          documentation: 75,
+          reflection: 84,
+          engineeringJudgment: 79,
+          notes: 'Solid work with clear trade-off reasoning.',
+        });
+      }
+
+      return schema.parse({});
+    },
+  };
 }

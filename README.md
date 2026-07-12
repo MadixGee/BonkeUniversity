@@ -6,7 +6,7 @@ AI University is a minimal TypeScript-based weekly study system that generates l
 
 Set the following variables before running the scripts:
 
-- OPENAI_API_KEY
+- OPENROUTER_API_KEY
 - SMTP_HOST
 - SMTP_PORT
 - SMTP_USER

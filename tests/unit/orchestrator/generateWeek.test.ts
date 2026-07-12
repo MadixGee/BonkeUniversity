@@ -5,13 +5,16 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 describe('generateWeek', () => {
-  it('does not call the provider when output already exists', async () => {
+  it('does not call the provider when the full lesson package already exists', async () => {
     const repoRoot = mkdtempSync(join(tmpdir(), 'ai-university-'));
     const weekDir = join(repoRoot, 'weekly', '2026-W29');
     mkdirSync(weekDir, { recursive: true });
     mkdirSync(join(repoRoot, 'curriculum'), { recursive: true });
     writeFileSync(join(repoRoot, 'curriculum', 'plan.yaml'), 'weeks:\n  - weekId: 2026-W29\n', 'utf8');
+    writeFileSync(join(weekDir, 'lecture.md'), '# lecture');
     writeFileSync(join(weekDir, 'assignment.md'), '# existing');
+    writeFileSync(join(weekDir, 'quiz.md'), '# quiz');
+    writeFileSync(join(weekDir, 'resources.md'), '# resources');
 
     const provider = { generate: vi.fn() };
     const git = {

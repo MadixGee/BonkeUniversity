@@ -1,25 +1,106 @@
+course:
+  title: "Backend Engineering & Software Architecture — LedgerCore"
+  primaryStack: "TypeScript / Node.js"
+  sideTrack: "Java (core domain logic ported after each phase)"
+  project: "LedgerCore — production-grade ledger & payments platform"
+
 weeks:
   - weekId: 2026-W29
+    phase: 1
     topic: "Computer systems fundamentals"
+    ledgerCoreTask: "Write CHARTER.md. Build a naive in-memory ledger prototype and profile stack/heap usage."
+
   - weekId: 2026-W30
+    phase: 1
     topic: "Data structures and algorithms"
+    ledgerCoreTask: "Implement the balance-lookup data structure; benchmark vs. a naive full-log scan."
+
   - weekId: 2026-W31
+    phase: 1
     topic: "Networking basics"
+    ledgerCoreTask: "Build a raw TCP echo server, then a minimal HTTP server exposing POST /transfer, no framework."
+
   - weekId: 2026-W32
-    topic: "Operating systems concepts"
+    phase: 1
+    topic: "Operating systems concepts and concurrency"
+    ledgerCoreTask: "Build the concurrent transaction-posting worker pool; prove no race past the balance invariant."
+
   - weekId: 2026-W33
+    phase: 2
     topic: "Databases and persistence"
+    ledgerCoreTask: "Design the accounts/transactions/entries schema with the balance invariant as a DB constraint."
+
   - weekId: 2026-W34
-    topic: "Backend service design"
+    phase: 2
+    topic: "NoSQL and modern data stores"
+    ledgerCoreTask: "Model transaction history as an event store; ADR comparing relational vs. event-sourced storage."
+
   - weekId: 2026-W35
-    topic: "API design and contracts"
+    phase: 2
+    topic: "Caching and data access patterns"
+    ledgerCoreTask: "Add a read-through cache for account balances; document staleness handling against the immutable log."
+
   - weekId: 2026-W36
-    topic: "Distributed systems foundations"
+    phase: 3
+    topic: "Backend service design and modular architecture"
+    ledgerCoreTask: "Layer Ledger Core into hexagonal architecture, isolating domain logic from DB/HTTP adapters."
+
   - weekId: 2026-W37
-    topic: "Reliability and observability"
+    phase: 3
+    topic: "Middleware, interceptors, and cross-cutting concerns"
+    ledgerCoreTask: "Build the API Gateway middleware chain (auth, idempotency-key enforcement, rate limiting, error handling). AI-code-review drill: generate an equivalent chain with an AI assistant without sharing CHARTER.md, then review its output against the Charter."
+
   - weekId: 2026-W38
-    topic: "Security fundamentals"
+    phase: 3
+    topic: "API design and contracts"
+    ledgerCoreTask: "Versioned OpenAPI spec for transfer/balance/history endpoints, wired through the middleware chain."
+
   - weekId: 2026-W39
-    topic: "Software architecture patterns"
+    phase: 3
+    topic: "Testing backend systems"
+    ledgerCoreTask: "Full unit + integration test suite, including isolated middleware tests. Write and present a one-page test-strategy design doc."
+
   - weekId: 2026-W40
+    phase: 3
+    topic: "Message queues and event-driven architecture"
+    ledgerCoreTask: "Ledger Core emits TransactionPosted events; build Reconciliation and Notification consumers with dead-letter handling."
+
+  - weekId: 2026-W41
+    phase: 4
+    topic: "Distributed systems foundations"
+    ledgerCoreTask: "Shard accounts via consistent hashing; handle a transfer between accounts on different shards."
+
+  - weekId: 2026-W42
+    phase: 4
+    topic: "Reliability and observability"
+    ledgerCoreTask: "Instrument end-to-end tracing, define SLOs, run a chaos test, and write a real incident postmortem."
+
+  - weekId: 2026-W43
+    phase: 4
+    topic: "Security fundamentals"
+    ledgerCoreTask: "OAuth2 auth on the API Gateway; OWASP self-audit for a payments API; fix at least two findings."
+
+  - weekId: 2026-W44
+    phase: 4
+    topic: "Scalability and performance engineering"
+    ledgerCoreTask: "Load test POST /transfer, find the real bottleneck, fix it, and prove the fix with before/after numbers."
+
+  - weekId: 2026-W45
+    phase: 5
+    topic: "Software architecture patterns"
+    ledgerCoreTask: "ADR: modular monolith vs. current microservices. Rewrite it a second time for a non-technical stakeholder audience."
+
+  - weekId: 2026-W46
+    phase: 5
+    topic: "Cloud-native deployment and CI/CD"
+    ledgerCoreTask: "Containerize all services; CI pipeline runs the full invariant suite before allowing a merge."
+
+  - weekId: 2026-W47
+    phase: 5
     topic: "System design and trade-offs"
+    ledgerCoreTask: "Design doc: how LedgerCore handles 10,000 transfers/second, with capacity estimates and rejected trade-offs."
+
+  - weekId: 2026-W48
+    phase: 5
+    topic: "Capstone: system design, delivery, and review"
+    ledgerCoreTask: "Feature-complete LedgerCore passing all CI constraints. Final architecture doc, AI-code-review drill on the full system, and an onboarding doc for a new engineer joining the project."
