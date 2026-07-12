@@ -55,7 +55,7 @@ export async function generateWeek({ repoRoot, provider, git, now = new Date() }
   const branchName = `lesson/${weekId}-${lessonSlug}`;
 
   await git.checkout('main');
-  await git.checkoutNewBranch(branchName, 'main');
+  await checkoutOrCreateLessonBranch(git, branchName);
 
   const lessonPayload = await provider.generate<Lesson>(
     { ...weekPrompt, agentName: 'lesson-writer' },
@@ -101,6 +101,20 @@ export async function generateWeek({ repoRoot, provider, git, now = new Date() }
   console.log(`[lesson-archive] branch=${branchName} merge=${mergeCommit}`);
 
   return { skipped: false, weekId };
+}
+
+async function checkoutOrCreateLessonBranch(git: GitClientLike, branchName: string): Promise<void> {
+  try {
+    await git.checkoutNewBranch(branchName, 'main');
+    return;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (!message.includes('already exists')) {
+      throw error;
+    }
+  }
+
+  await git.checkout(branchName);
 }
 
 function isWorkingTreeDirty(status: unknown): boolean {
