@@ -20,9 +20,15 @@ export class OpenAIProvider implements LLMProvider {
     const agent = loadAgent(vars.agentName ?? 'curriculum-writer');
     const model = process.env.OPENROUTER_MODEL ?? agent.config.model;
 
-    const supportedModel = model.includes('gpt-4o') || model.includes('gpt-4.1') || model.includes('o3') || model.includes('claude-3.5') || model.includes('claude-3.7');
-    if (!supportedModel) {
-      console.warn(`[OpenAIProvider] Model ${model} may not support structured outputs. Consider using gpt-4o-2024-08-06 or later.`);
+    const supportsStructuredOutputs =
+      model.includes('gpt-4o') ||
+      model.includes('gpt-4.1') ||
+      model.includes('o3') ||
+      model.includes('claude-3.5') ||
+      model.includes('claude-3.7');
+
+    if (!supportsStructuredOutputs) {
+      console.warn(`[OpenAIProvider] Model ${model} may not support json_schema structured outputs. Falling back to json_object.`);
     }
 
     const userPrompt = renderTemplate(agent.userPromptTemplate, buildTemplateVars(vars));
@@ -36,19 +42,21 @@ export class OpenAIProvider implements LLMProvider {
         'X-Title': 'AI University',
       },
       body: JSON.stringify({
-        model:'openrouter/free',
+        model,
         messages: [
           { role: 'system', content: agent.systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        response_format: {
-          type: 'json_schema',
-          json_schema: {
-            name: agent.config.schemaName,
-            schema: buildJsonSchema(schema, agent.config.schemaName),
-            strict: true,
-          },
-        },
+        response_format: supportsStructuredOutputs
+          ? {
+              type: 'json_schema',
+              json_schema: {
+                name: agent.config.schemaName,
+                schema: buildJsonSchema(schema, agent.config.schemaName),
+                strict: true,
+              },
+            }
+          : { type: 'json_object' },
         temperature: agent.config.temperature,
         max_tokens: agent.config.maxTokens,
       }),

@@ -5,6 +5,7 @@ import yaml from 'js-yaml';
 import { config } from '../config.js';
 import { OpenAIProvider } from '../llm/openaiProvider.js';
 import type { LLMProvider, WeekPromptVars } from '../llm/provider.js';
+import { GitClient } from '../repo/gitClient.js';
 import type { GitClientLike } from '../repo/gitClient.js';
 import { getWeekDir } from '../repo/paths.js';
 import type { Lesson } from '../schemas/lesson.schema.js';
@@ -57,7 +58,7 @@ export async function generateWeek({ repoRoot, provider, git, now = new Date() }
   await git.checkoutNewBranch(branchName, 'main');
 
   const lessonPayload = await provider.generate<Lesson>(
-    { ...weekPrompt, agentName: 'curriculum-writer' },
+    { ...weekPrompt, agentName: 'lesson-writer' },
     LessonSchema,
   );
   const assignmentPayload = await provider.generate(
@@ -196,68 +197,14 @@ function renderResourcesMarkdown(lesson: Lesson): string {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const repoRoot = process.cwd();
-  const provider = config.openRouterApiKey ? new OpenAIProvider() : createFallbackProvider();
-  const git = {
-    checkIsRepo: async () => true,
-    status: async () => ({}),
-    currentBranch: async () => 'main',
-    checkout: async () => undefined,
-    checkoutNewBranch: async () => undefined,
-    mergeNoFf: async () => undefined,
-    revParse: async () => 'HEAD',
-    pushBranch: async () => undefined,
-    add: async () => undefined,
-    commit: async () => undefined,
-    push: async () => undefined,
-    resetHard: async () => undefined,
-  };
-  void generateWeek({ repoRoot, provider, git });
+  const provider = config.openRouterApiKey ? new OpenAIProvider() : (() => { throw new Error('No LLM provider configured. Please set OPENROUTER_API_KEY in your environment.'); })();
+  const git = new GitClient(repoRoot);
+
+  void (async () => {
+    if (!(await git.checkIsRepo())) {
+      throw new Error('Current directory is not a git repository.');
+    }
+
+    await generateWeek({ repoRoot, provider, git });
+  })();
 }
-
-// function createFallbackProvider(): LLMProvider {
-//   return {
-//     async generate<T>(_prompt: WeekPromptVars, schema: any): Promise<T> {
-//       if (schema === LessonSchema) {
-//         return schema.parse({
-//           topic: 'Systems Programming',
-//           weekId: '2026-W29',
-//           learningObjectives: ['Understand process isolation'],
-//           prerequisites: ['Basic command line usage'],
-//           estimatedStudyTimeMinutes: 90,
-//           whyThisMatters: 'It helps you reason about how software interacts with the OS.',
-//           readingList: [{ title: 'The Linux Programming Interface', sourceType: 'textbook' }],
-//           practicalExamples: ['Tracing with strace'],
-//           architectureDiscussion: 'Discuss how processes and threads differ.',
-//           codingExercise: 'Write a small program that spawns a child process.',
-//           projectAssignment: 'Document one OS interaction in your project.',
-//           reflectionQuestions: ['What did you learn about process boundaries?'],
-//           citedClaims: [{ claim: 'Processes are isolated memory spaces.', sourceUrl: 'https://man7.org/linux/man-pages/' }],
-//         });
-//       }
-
-//       if (schema === AssignmentSchema) {
-//         return schema.parse({
-//           title: 'Build a small process demo',
-//           summary: 'Create a small script or program that demonstrates fork and IPC.',
-//           deliverables: ['Source code', 'Short README'],
-//           acceptanceCriteria: ['The program runs locally', 'The README explains the behavior'],
-//         });
-//       }
-
-//       if (schema === QuizSchema) {
-//         return schema.parse({
-//           title: 'Systems Programming Quiz',
-//           questions: [
-//             {
-//               prompt: 'What is a process?',
-//               options: ['An executing program instance', 'A compiler flag', 'A disk partition', 'A function'],
-//               answer: 'An executing program instance',
-//             },
-//           ],
-//         });
-//       }
-
-//       return schema.parse({});
-//     },
-//   };
-// }

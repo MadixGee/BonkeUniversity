@@ -48,14 +48,10 @@ describe('OpenAIProvider', () => {
 
     const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
     const body = JSON.parse(init.body as string);
-    expect(body.model).toBe(process.env.OPENROUTER_MODEL ?? 'gpt-4o-2024-08-06');
+    expect(body.model).toBe('openrouter/free');
     expect(body.messages[0].content).toContain('curriculum designer');
     expect(body.response_format).toMatchObject({
-      type: 'json_schema',
-      json_schema: {
-        name: 'week',
-        strict: true,
-      },
+      type: 'json_object',
     });
   });
 

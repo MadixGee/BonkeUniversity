@@ -5,10 +5,12 @@ course:
   project: "LedgerCore — production-grade ledger & payments platform"
 
 weeks:
+
+
   - weekId: 2026-W29
     phase: 1
-    topic: "Computer systems fundamentals"
-    ledgerCoreTask: "Write CHARTER.md. Build a naive in-memory ledger prototype and profile stack/heap usage."
+    topic: "Codebase orientation and improvement"
+    ledgerCoreTask: "Inspect the current codebase, document what works and what needs improvement, then make one small but meaningful quality improvement with tests and a short rationale."
 
   - weekId: 2026-W30
     phase: 1
