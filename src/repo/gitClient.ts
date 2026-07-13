@@ -12,6 +12,7 @@ export interface GitClientLike {
   add(files: string[]): Promise<void>;
   commit(message: string): Promise<void>;
   push(): Promise<void>;
+  raw(args: string[]): Promise<string>;
   resetHard(): Promise<void>;
   setRemote?(remoteName: string, url: string): Promise<void>;
 }
@@ -67,6 +68,10 @@ export class GitClient implements GitClientLike {
 
   async push(): Promise<void> {
     await this.git.push();
+  }
+
+  async raw(args: string[]): Promise<string> {
+    return this.git.raw(args);
   }
 
   async setRemote(remoteName: string, url: string): Promise<void> {

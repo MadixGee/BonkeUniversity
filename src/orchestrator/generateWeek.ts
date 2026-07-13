@@ -1,19 +1,17 @@
-import { appendFile, mkdir, readFile, readFileSync, writeFile, existsSync } from 'node:fs';
+import { appendFile, existsSync, mkdirSync, readFile, readFileSync, writeFile } from 'node:fs';
 import { join } from 'node:path';
 import { promisify } from 'node:util';
 import yaml from 'js-yaml';
 import { config } from '../config.js';
 import { OpenAIProvider } from '../llm/openaiProvider.js';
 import type { LLMProvider, WeekPromptVars } from '../llm/provider.js';
-import { GitClient } from '../repo/gitClient.js';
-import type { GitClientLike } from '../repo/gitClient.js';
-import { getWeekDir } from '../repo/paths.js';
+import { getContentRepoRoot } from '../repo/paths.js';
 import type { Lesson } from '../schemas/lesson.schema.js';
 import { LessonSchema } from '../schemas/lesson.schema.js';
 import { AssignmentSchema } from '../schemas/assignment.schema.js';
 import { QuizSchema } from '../schemas/quiz.schema.js';
+import { writeAndPushWeek } from './pushWeekToContentRepo.js';
 
-const mkdirAsync = promisify(mkdir);
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 const appendFileAsync = promisify(appendFile);
@@ -21,41 +19,45 @@ const appendFileAsync = promisify(appendFile);
 export interface GenerateWeekOptions {
   repoRoot: string;
   provider: LLMProvider;
-  git: GitClientLike;
+  contentRepoPath?: string;
   now?: Date;
 }
 
-export async function generateWeek({ repoRoot, provider, git, now = new Date() }: GenerateWeekOptions) {
-  const status = await git.status();
-  if (isWorkingTreeDirty(status)) {
-    throw new Error('Refusing to generate lesson: working tree is dirty. Commit or stash your changes first.');
+export async function generateWeek({ repoRoot, provider, contentRepoPath, now = new Date() }: GenerateWeekOptions) {
+  const resolvedContentRepoPath = getContentRepoRoot(contentRepoPath);
+  if (!existsSync(resolvedContentRepoPath)) {
+    throw new Error(`CONTENT_REPO_PATH does not exist on disk: ${resolvedContentRepoPath}`);
   }
 
   const weekId = await resolveWeekId(repoRoot, now);
-  const weekDir = getWeekDir(repoRoot, weekId);
-  const lessonPath = join(weekDir, 'lecture.md');
-  const assignmentPath = join(weekDir, 'assignment.md');
-  const quizPath = join(weekDir, 'quiz.md');
-  const resourcesPath = join(weekDir, 'resources.md');
+
+  const weekPrompt = buildWeekPromptVars({ repoRoot, weekId });
+  const moduleSlug = slugify(weekPrompt.topic);
+  const moduleDir = join(resolvedContentRepoPath, 'curriculum', 'modules', moduleSlug);
+  const objectivesPath = join(moduleDir, 'objectives.md');
+  const resourcesPath = join(moduleDir, 'resources.md');
+  const lecturesDir = join(moduleDir, 'lectures');
+  const assignmentsDir = join(moduleDir, 'assignments');
+  const quizzesDir = join(moduleDir, 'quizzes');
+  const weekFileStem = `week-${String(weekPrompt.weekNumber).padStart(2, '0')}-${moduleSlug}`;
+  const lessonPath = join(lecturesDir, `${weekFileStem}.md`);
+  const assignmentPath = join(assignmentsDir, `${weekFileStem}.md`);
+  const quizPath = join(quizzesDir, `${weekFileStem}.md`);
 
   const hasCompleteLessonPackage =
+    existsSync(objectivesPath) &&
+    existsSync(resourcesPath) &&
     existsSync(lessonPath) &&
     existsSync(assignmentPath) &&
-    existsSync(quizPath) &&
-    existsSync(resourcesPath);
+    existsSync(quizPath);
 
   if (hasCompleteLessonPackage) {
     return { skipped: true, weekId };
   }
 
-  await mkdirAsync(weekDir, { recursive: true });
-
-  const weekPrompt = buildWeekPromptVars({ repoRoot, weekId });
-  const lessonSlug = slugify(weekPrompt.topic);
-  const branchName = `lesson/${weekId}-${lessonSlug}`;
-
-  await git.checkout('main');
-  await checkoutOrCreateLessonBranch(git, branchName);
+  mkdirSync(lecturesDir, { recursive: true });
+  mkdirSync(assignmentsDir, { recursive: true });
+  mkdirSync(quizzesDir, { recursive: true });
 
   const lessonPayload = await provider.generate<Lesson>(
     { ...weekPrompt, agentName: 'lesson-writer' },
@@ -73,61 +75,29 @@ export async function generateWeek({ repoRoot, provider, git, now = new Date() }
   const lessonMarkdown = renderLessonMarkdown(lessonPayload);
   const assignmentMarkdown = renderAssignmentMarkdown(assignmentPayload);
   const quizMarkdown = renderQuizMarkdown(quizPayload);
+  const objectivesMarkdown = renderObjectivesMarkdown(lessonPayload);
 
+  await writeFileAsync(objectivesPath, objectivesMarkdown, 'utf8');
   await writeFileAsync(lessonPath, lessonMarkdown, 'utf8');
   await writeFileAsync(assignmentPath, assignmentMarkdown, 'utf8');
   await writeFileAsync(quizPath, quizMarkdown, 'utf8');
   await writeFileAsync(resourcesPath, renderResourcesMarkdown(lessonPayload), 'utf8');
 
-  await writeFileAsync(join(weekDir, 'plan.json'), JSON.stringify({ weekId, topic: lessonPayload.topic }, null, 2), 'utf8');
-  await writeFileAsync(join(weekDir, 'reading-list.md'), `# Reading List\n\n- ${lessonPayload.readingList.map((item) => item.title).join('\n- ')}`, 'utf8');
-
-  await git.add([lessonPath, assignmentPath, quizPath, resourcesPath, join(weekDir, 'plan.json'), join(weekDir, 'reading-list.md')]);
-  await git.commit(`Generate lesson: ${weekId} - ${lessonPayload.topic}`);
-
-  await git.checkout('main');
-  await git.mergeNoFf(branchName, `Merge ${branchName}`);
-  const mergeCommit = await git.revParse('HEAD');
-
-  if (config.githubRepo) {
-    await git.setRemote?.(config.repoRemote, config.githubRepo);
-  }
-
-  await git.pushBranch(branchName, config.repoRemote);
-  await git.pushBranch('main', config.repoRemote);
+  const pushResult = await writeAndPushWeek({
+    repoPath: resolvedContentRepoPath,
+    weekId,
+    moduleSlug,
+    moduleTitle: lessonPayload.topic,
+    moduleRelativePath: join('curriculum', 'modules', moduleSlug),
+    remoteName: config.repoRemote,
+    remoteUrl: config.githubRepo,
+  });
 
   const tracePath = join(repoRoot, 'transcript', 'lesson-branches.log');
-  await appendFileAsync(tracePath, `${new Date().toISOString()} ${branchName} ${mergeCommit}\n`, 'utf8');
-  console.log(`[lesson-archive] branch=${branchName} merge=${mergeCommit}`);
+  await appendFileAsync(tracePath, `${new Date().toISOString()} ${pushResult.branchName} ${pushResult.mergeCommit}\n`, 'utf8');
+  console.log(`[lesson-archive] branch=${pushResult.branchName} merge=${pushResult.mergeCommit}`);
 
   return { skipped: false, weekId };
-}
-
-async function checkoutOrCreateLessonBranch(git: GitClientLike, branchName: string): Promise<void> {
-  try {
-    await git.checkoutNewBranch(branchName, 'main');
-    return;
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    if (!message.includes('already exists')) {
-      throw error;
-    }
-  }
-
-  await git.checkout(branchName);
-}
-
-function isWorkingTreeDirty(status: unknown): boolean {
-  if (!status || typeof status !== 'object') {
-    return false;
-  }
-
-  const value = status as { isClean?: () => boolean; files?: unknown[] };
-  if (typeof value.isClean === 'function') {
-    return !value.isClean();
-  }
-
-  return Array.isArray(value.files) && value.files.length > 0;
 }
 
 async function resolveWeekId(repoRoot: string, now: Date): Promise<string> {
@@ -193,6 +163,14 @@ function renderLessonMarkdown(lesson: Lesson): string {
   return `# ${lesson.topic}\n\n## Learning Objectives\n- ${lesson.learningObjectives.join('\n- ')}\n\n## Why This Matters\n${lesson.whyThisMatters}\n`;
 }
 
+function renderObjectivesMarkdown(lesson: Lesson): string {
+  return [
+    `# Module Objectives — ${lesson.topic}`,
+    '',
+    ...lesson.learningObjectives.map((objective, index) => `${index + 1}. ${objective}`),
+  ].join('\n');
+}
+
 function renderAssignmentMarkdown(assignment: { title: string; summary: string; deliverables: string[]; acceptanceCriteria: string[] }) {
   return `# ${assignment.title}\n\n${assignment.summary}\n\n## Deliverables\n- ${assignment.deliverables.join('\n- ')}\n\n## Acceptance Criteria\n- ${assignment.acceptanceCriteria.join('\n- ')}`;
 }
@@ -212,13 +190,12 @@ function renderResourcesMarkdown(lesson: Lesson): string {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const repoRoot = process.cwd();
   const provider = config.openRouterApiKey ? new OpenAIProvider() : (() => { throw new Error('No LLM provider configured. Please set OPENROUTER_API_KEY in your environment.'); })();
-  const git = new GitClient(repoRoot);
 
   void (async () => {
-    if (!(await git.checkIsRepo())) {
-      throw new Error('Current directory is not a git repository.');
-    }
-
-    await generateWeek({ repoRoot, provider, git });
+    await generateWeek({
+      repoRoot,
+      provider,
+      contentRepoPath: process.env.CONTENT_REPO_PATH,
+    });
   })();
 }

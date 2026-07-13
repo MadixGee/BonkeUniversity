@@ -13,7 +13,7 @@ export function getTranscriptPath(repoRoot: string): string {
 }
 
 export function getContentRepoRoot(explicitPath?: string): string {
-  const resolved = explicitPath ?? process.env.CONTENT_REPO_PATH;
+  const resolved = explicitPath ?? process.env.CONTENT_REPO_PATH ?? join(process.cwd(), 'src', 'BonkeUniversity');
   if (!resolved) {
     throw new Error('CONTENT_REPO_PATH is required. Point it to a separate BonkeUniversity clone path.');
   }
@@ -23,4 +23,8 @@ export function getContentRepoRoot(explicitPath?: string): string {
 
 export function getContentWeekDir(contentRepoRoot: string, weekId: string): string {
   return join(contentRepoRoot, 'weekly', weekId);
+}
+
+export function getContentModuleDir(contentRepoRoot: string, moduleSlug: string): string {
+  return join(contentRepoRoot, 'curriculum', 'modules', moduleSlug);
 }
