@@ -1,0 +1,378 @@
+topics:
+  # ============================================================
+  # COMPUTER SCIENCE FOUNDATIONS
+  # ============================================================
+
+  - topic: "Computer systems fundamentals"
+    sources:
+      - title: "Computer Systems: A Programmer's Perspective (CS:APP)"
+        url: "https://csapp.cs.cmu.edu/"
+        type: "textbook"
+      - title: "CS:APP Course Materials"
+        url: "https://csapp.cs.cmu.edu/"
+        type: "official-docs"
+
+  - topic: "Data structures and algorithms"
+    sources:
+      - title: "The Algorithm Design Manual"
+        url: "https://www.algorist.com/"
+        type: "textbook"
+      - title: "OpenDSA"
+        url: "https://opendsa-server.cs.vt.edu/"
+        type: "course"
+      - title: "VisuAlgo"
+        url: "https://visualgo.net/"
+        type: "reference"
+
+  - topic: "Operating systems"
+    sources:
+      - title: "Operating Systems: Three Easy Pieces"
+        url: "https://pages.cs.wisc.edu/~remzi/OSTEP/"
+        type: "textbook"
+
+  - topic: "Computer networking"
+    sources:
+      - title: "High Performance Browser Networking"
+        url: "https://hpbn.co/"
+        type: "textbook"
+      - title: "TCP/IP Guide"
+        url: "https://www.tcpipguide.com/"
+        type: "reference"
+
+  - topic: "Linux and shell"
+    sources:
+      - title: "How Linux Works"
+        url: "https://nostarch.com/howlinuxworks3"
+        type: "textbook"
+      - title: "The Linux Documentation Project"
+        url: "https://tldp.org/"
+        type: "official-docs"
+      - title: "ExplainShell"
+        url: "https://explainshell.com/"
+        type: "reference"
+
+  - topic: "Version control"
+    sources:
+      - title: "Pro Git"
+        url: "https://git-scm.com/book/en/v2"
+        type: "textbook"
+      - title: "Git Documentation"
+        url: "https://git-scm.com/docs"
+        type: "official-docs"
+
+  # ============================================================
+  # JAVA & BACKEND DEVELOPMENT
+  # ============================================================
+
+  - topic: "Java fundamentals"
+    sources:
+      - title: "Effective Java"
+        url: "https://www.oreilly.com/library/view/effective-java-3rd/9780134686097/"
+        type: "textbook"
+      - title: "Oracle Java Documentation"
+        url: "https://docs.oracle.com/en/java/"
+        type: "official-docs"
+
+  - topic: "Object-oriented programming"
+    sources:
+      - title: "Head First Object-Oriented Analysis and Design"
+        url: "https://www.oreilly.com/library/view/head-first-object-oriented/0596008678/"
+        type: "textbook"
+
+  - topic: "Design patterns"
+    sources:
+      - title: "Head First Design Patterns"
+        url: "https://www.oreilly.com/library/view/head-first-design/0596007124/"
+        type: "textbook"
+      - title: "Refactoring Guru"
+        url: "https://refactoring.guru/"
+        type: "reference"
+
+  - topic: "Spring Boot"
+    sources:
+      - title: "Spring Framework Documentation"
+        url: "https://docs.spring.io/spring-framework/reference/"
+        type: "official-docs"
+      - title: "Spring Boot Documentation"
+        url: "https://docs.spring.io/spring-boot/index.html"
+        type: "official-docs"
+
+  - topic: "Spring Security"
+    sources:
+      - title: "Spring Security Documentation"
+        url: "https://docs.spring.io/spring-security/reference/"
+        type: "official-docs"
+
+  - topic: "Testing"
+    sources:
+      - title: "JUnit 5 Documentation"
+        url: "https://junit.org/junit5/docs/current/user-guide/"
+        type: "official-docs"
+      - title: "Mockito Documentation"
+        url: "https://site.mockito.org/"
+        type: "official-docs"
+      - title: "Google Testing Blog"
+        url: "https://testing.googleblog.com/"
+        type: "reference"
+
+  # ============================================================
+  # DATABASES
+  # ============================================================
+
+  - topic: "SQL"
+    sources:
+      - title: "PostgreSQL Documentation"
+        url: "https://www.postgresql.org/docs/"
+        type: "official-docs"
+
+  - topic: "Relational databases"
+    sources:
+      - title: "PostgreSQL Documentation"
+        url: "https://www.postgresql.org/docs/"
+        type: "official-docs"
+      - title: "Use The Index, Luke!"
+        url: "https://use-the-index-luke.com/"
+        type: "reference"
+
+  - topic: "NoSQL databases"
+    sources:
+      - title: "MongoDB Documentation"
+        url: "https://www.mongodb.com/docs/"
+        type: "official-docs"
+      - title: "Elasticsearch Documentation"
+        url: "https://www.elastic.co/docs"
+        type: "official-docs"
+
+  # ============================================================
+  # SOFTWARE DESIGN
+  # ============================================================
+
+  - topic: "Backend service design"
+    sources:
+      - title: "Designing Data-Intensive Applications"
+        url: "https://dataintensive.net/"
+        type: "textbook"
+
+  - topic: "API design"
+    sources:
+      - title: "OpenAPI Specification"
+        url: "https://spec.openapis.org/oas/latest.html"
+        type: "official-docs"
+      - title: "GraphQL Documentation"
+        url: "https://graphql.org/learn/"
+        type: "official-docs"
+      - title: "gRPC Documentation"
+        url: "https://grpc.io/docs/"
+        type: "official-docs"
+
+  - topic: "Software architecture"
+    sources:
+      - title: "Architecture Patterns with Python"
+        url: "https://www.cosmicpython.com/"
+        type: "textbook"
+      - title: "Martin Fowler Architecture Guide"
+        url: "https://martinfowler.com/architecture/"
+        type: "reference"
+
+  - topic: "Domain-Driven Design"
+    sources:
+      - title: "Learning Domain-Driven Design"
+        url: "https://learning.oreilly.com/library/view/learning-domain-driven-design/9781098100124/"
+        type: "textbook"
+
+  - topic: "System design"
+    sources:
+      - title: "System Design Primer"
+        url: "https://github.com/donnemartin/system-design-primer"
+        type: "reference"
+      - title: "Designing Data-Intensive Applications"
+        url: "https://dataintensive.net/"
+        type: "textbook"
+
+  # ============================================================
+  # DISTRIBUTED SYSTEMS
+  # ============================================================
+
+  - topic: "Distributed systems"
+    sources:
+      - title: "MIT 6.824 Distributed Systems"
+        url: "https://pdos.csail.mit.edu/6.824/"
+        type: "course"
+      - title: "Raft Consensus Algorithm"
+        url: "https://raft.github.io/"
+        type: "official-docs"
+
+  - topic: "Concurrency"
+    sources:
+      - title: "Java Concurrency in Practice"
+        url: "https://jcip.net/"
+        type: "textbook"
+      - title: "The Little Book of Semaphores"
+        url: "https://greenteapress.com/wp/semaphores/"
+        type: "textbook"
+
+  - topic: "Messaging"
+    sources:
+      - title: "Apache Kafka Documentation"
+        url: "https://kafka.apache.org/documentation/"
+        type: "official-docs"
+      - title: "RabbitMQ Documentation"
+        url: "https://www.rabbitmq.com/docs"
+        type: "official-docs"
+
+  - topic: "Caching"
+    sources:
+      - title: "Redis Documentation"
+        url: "https://redis.io/docs/latest/"
+        type: "official-docs"
+      - title: "Cloudflare Learning Center - Caching"
+        url: "https://www.cloudflare.com/learning/cdn/what-is-caching/"
+        type: "reference"
+
+  # ============================================================
+  # SECURITY
+  # ============================================================
+
+  - topic: "Security"
+    sources:
+      - title: "OWASP Cheat Sheet Series"
+        url: "https://cheatsheetseries.owasp.org/"
+        type: "official-docs"
+      - title: "OWASP Top Ten"
+        url: "https://owasp.org/www-project-top-ten/"
+        type: "official-docs"
+
+  - topic: "Cryptography"
+    sources:
+      - title: "Crypto101"
+        url: "https://www.crypto101.io/"
+        type: "textbook"
+
+  # ============================================================
+  # CLOUD & DEVOPS
+  # ============================================================
+
+  - topic: "Docker"
+    sources:
+      - title: "Docker Documentation"
+        url: "https://docs.docker.com/"
+        type: "official-docs"
+
+  - topic: "Kubernetes"
+    sources:
+      - title: "Kubernetes Documentation"
+        url: "https://kubernetes.io/docs/home/"
+        type: "official-docs"
+      - title: "Kubernetes Up & Running"
+        url: "https://www.oreilly.com/library/view/kubernetes-up-and/9781098110192/"
+        type: "textbook"
+
+  - topic: "Cloud fundamentals"
+    sources:
+      - title: "AWS Documentation"
+        url: "https://docs.aws.amazon.com/"
+        type: "official-docs"
+      - title: "Azure Documentation"
+        url: "https://learn.microsoft.com/azure/"
+        type: "official-docs"
+      - title: "Google Cloud Documentation"
+        url: "https://cloud.google.com/docs"
+        type: "official-docs"
+
+  - topic: "Infrastructure as Code"
+    sources:
+      - title: "Terraform Documentation"
+        url: "https://developer.hashicorp.com/terraform/docs"
+        type: "official-docs"
+      - title: "Pulumi Documentation"
+        url: "https://www.pulumi.com/docs/"
+        type: "official-docs"
+
+  - topic: "CI/CD"
+    sources:
+      - title: "GitHub Actions Documentation"
+        url: "https://docs.github.com/actions"
+        type: "official-docs"
+      - title: "Continuous Delivery"
+        url: "https://continuousdelivery.com/"
+        type: "textbook"
+
+  - topic: "Observability"
+    sources:
+      - title: "Google SRE Book"
+        url: "https://sre.google/sre-book/"
+        type: "textbook"
+      - title: "Prometheus Documentation"
+        url: "https://prometheus.io/docs/"
+        type: "official-docs"
+      - title: "OpenTelemetry Documentation"
+        url: "https://opentelemetry.io/docs/"
+        type: "official-docs"
+
+  # ============================================================
+  # ADVANCED COMPUTER SCIENCE
+  # ============================================================
+
+  - topic: "Compilers"
+    sources:
+      - title: "Crafting Interpreters"
+        url: "https://craftinginterpreters.com/"
+        type: "textbook"
+
+  # ============================================================
+  # FUTURE AI ENGINEERING PATH
+  # ============================================================
+
+  - topic: "Python"
+    sources:
+      - title: "Python Documentation"
+        url: "https://docs.python.org/3/"
+        type: "official-docs"
+
+  - topic: "Machine Learning"
+    sources:
+      - title: "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow"
+        url: "https://www.oreilly.com/library/view/hands-on-machine-learning/9781098125967/"
+        type: "textbook"
+      - title: "scikit-learn Documentation"
+        url: "https://scikit-learn.org/stable/"
+        type: "official-docs"
+
+  - topic: "Deep Learning"
+    sources:
+      - title: "Deep Learning"
+        url: "https://www.deeplearningbook.org/"
+        type: "textbook"
+      - title: "PyTorch Documentation"
+        url: "https://pytorch.org/docs/stable/"
+        type: "official-docs"
+
+  - topic: "Large Language Models"
+    sources:
+      - title: "Hugging Face Course"
+        url: "https://huggingface.co/learn"
+        type: "course"
+      - title: "Transformers Documentation"
+        url: "https://huggingface.co/docs/transformers"
+        type: "official-docs"
+
+  - topic: "AI Agents and RAG"
+    sources:
+      - title: "LangChain Documentation"
+        url: "https://python.langchain.com/docs/"
+        type: "official-docs"
+      - title: "LlamaIndex Documentation"
+        url: "https://docs.llamaindex.ai/"
+        type: "official-docs"
+      - title: "OpenAI Platform Documentation"
+        url: "https://platform.openai.com/docs"
+        type: "official-docs"
+
+  - topic: "MLOps"
+    sources:
+      - title: "MLflow Documentation"
+        url: "https://mlflow.org/docs/latest/"
+        type: "official-docs"
+      - title: "Kubeflow Documentation"
+        url: "https://www.kubeflow.org/docs/"
+        type: "official-docs"

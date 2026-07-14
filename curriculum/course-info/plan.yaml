@@ -1,0 +1,288 @@
+course:
+  title: "Backend Engineering & Software Architecture — LedgerCore"
+  description: >
+    Learn backend engineering by building a production-grade double-entry ledger
+    and payments platform from first principles. The curriculum emphasizes
+    computer science fundamentals, software architecture, distributed systems,
+    cloud, DevOps, observability, and production engineering.
+
+  primaryStack: "TypeScript / Node.js"
+  sideTrack: "Java (core domain logic ported after each major phase)"
+  project: "LedgerCore — Production-grade Ledger & Payments Platform"
+
+weeks:
+
+# ==========================================================
+# PHASE 1 — FOUNDATIONS
+# ==========================================================
+
+  - weekId: 2026-W29
+    phase: 1
+    topic: "Codebase Orientation & Engineering Workflow"
+    objectives:
+      - Understand the existing LedgerCore codebase
+      - Learn project structure
+      - Introduce Git workflow
+      - Pull Requests
+      - Conventional Commits
+      - Code Reviews
+      - ESLint
+      - Prettier
+    ledgerCoreTask: >
+      Inspect the current codebase, document strengths and weaknesses,
+      create an architecture overview, and implement one meaningful
+      quality improvement with tests.
+
+  - weekId: 2026-W30
+    phase: 1
+    topic: "Data Structures & Algorithms"
+    ledgerCoreTask: >
+      Implement the account balance lookup structure,
+      benchmark it against a full ledger scan,
+      and analyze time and memory complexity.
+
+  - weekId: 2026-W31
+    phase: 1
+    topic: "Computer Networking & HTTP"
+    ledgerCoreTask: >
+      Build a TCP echo server,
+      then implement a minimal HTTP server
+      supporting routing, middleware,
+      request parsing and POST /transfer
+      without using Express.
+
+  - weekId: 2026-W32
+    phase: 1
+    topic: "Operating Systems & Concurrency"
+    ledgerCoreTask: >
+      Build a concurrent transaction processing worker pool.
+      Demonstrate thread safety and prove that the balance
+      invariant cannot be violated.
+
+# ==========================================================
+# PHASE 2 — DATA
+# ==========================================================
+
+  - weekId: 2026-W33
+    phase: 2
+    topic: "SQL & Relational Databases"
+    ledgerCoreTask: >
+      Design relational schemas,
+      indexes,
+      constraints,
+      transactions,
+      and isolation strategies for LedgerCore.
+
+  - weekId: 2026-W34
+    phase: 2
+    topic: "Databases & Persistence"
+    ledgerCoreTask: >
+      Implement PostgreSQL persistence,
+      migrations,
+      repositories,
+      and enforce the double-entry accounting invariant.
+
+  - weekId: 2026-W35
+    phase: 2
+    topic: "NoSQL & Event Sourcing"
+    ledgerCoreTask: >
+      Model transaction history as an immutable event store
+      and write an ADR comparing relational storage
+      versus event sourcing.
+
+# ==========================================================
+# PHASE 3 — BACKEND ENGINEERING
+# ==========================================================
+
+  - weekId: 2026-W36
+    phase: 3
+    topic: "Dependency Injection & Hexagonal Architecture"
+    ledgerCoreTask: >
+      Refactor LedgerCore into Hexagonal Architecture.
+      Separate domain,
+      infrastructure,
+      adapters,
+      and dependency injection.
+
+  - weekId: 2026-W37
+    phase: 3
+    topic: "API Design & Middleware"
+    ledgerCoreTask: >
+      Build middleware supporting
+      authentication,
+      validation,
+      rate limiting,
+      idempotency,
+      logging,
+      correlation IDs,
+      and centralized error handling.
+
+  - weekId: 2026-W38
+    phase: 3
+    topic: "REST APIs, OpenAPI & Contracts"
+    ledgerCoreTask: >
+      Publish versioned OpenAPI specifications,
+      generate clients,
+      validate requests,
+      and document API contracts.
+
+  - weekId: 2026-W39
+    phase: 3
+    topic: "Testing"
+    ledgerCoreTask: >
+      Implement comprehensive
+      unit,
+      integration,
+      contract,
+      and end-to-end tests.
+      Produce a test strategy document.
+
+  - weekId: 2026-W40
+    phase: 3
+    topic: "Docker & Local Development"
+    ledgerCoreTask: >
+      Containerize every service,
+      PostgreSQL,
+      Redis,
+      and supporting infrastructure
+      using Docker Compose.
+
+# ==========================================================
+# PHASE 4 — DISTRIBUTED SYSTEMS
+# ==========================================================
+
+  - weekId: 2026-W41
+    phase: 4
+    topic: "Distributed Systems"
+    ledgerCoreTask: >
+      Shard accounts using consistent hashing,
+      route cross-shard transfers,
+      and document failure scenarios.
+
+  - weekId: 2026-W42
+    phase: 4
+    topic: "Messaging & Event-Driven Architecture"
+    ledgerCoreTask: >
+      Introduce Kafka,
+      publish TransactionPosted events,
+      implement reconciliation consumers,
+      retries,
+      dead-letter queues,
+      and idempotent consumers.
+
+  - weekId: 2026-W43
+    phase: 4
+    topic: "Caching"
+    ledgerCoreTask: >
+      Introduce Redis caching for balance queries.
+      Handle invalidation,
+      stale reads,
+      cache warming,
+      and benchmark improvements.
+
+# ==========================================================
+# PHASE 5 — SECURITY & RELIABILITY
+# ==========================================================
+
+  - weekId: 2026-W44
+    phase: 5
+    topic: "Authentication & Authorization"
+    ledgerCoreTask: >
+      Implement OAuth2,
+      JWT authentication,
+      role-based authorization,
+      refresh tokens,
+      and secure API access.
+
+  - weekId: 2026-W45
+    phase: 5
+    topic: "Application Security"
+    ledgerCoreTask: >
+      Perform an OWASP security audit,
+      eliminate vulnerabilities,
+      implement secure headers,
+      secrets management,
+      and input validation.
+
+  - weekId: 2026-W46
+    phase: 5
+    topic: "Observability & Reliability"
+    ledgerCoreTask: >
+      Add structured logging,
+      metrics,
+      distributed tracing,
+      dashboards,
+      alerts,
+      SLOs,
+      and perform a chaos engineering exercise.
+
+# ==========================================================
+# PHASE 6 — CLOUD & DEVOPS
+# ==========================================================
+
+  - weekId: 2026-W47
+    phase: 6
+    topic: "CI/CD & Infrastructure as Code"
+    ledgerCoreTask: >
+      Build GitHub Actions pipelines,
+      infrastructure using Pulumi,
+      automated testing,
+      deployment,
+      rollback,
+      and environment promotion.
+
+  - weekId: 2026-W48
+    phase: 6
+    topic: "Kubernetes & Cloud Deployment"
+    ledgerCoreTask: >
+      Deploy LedgerCore onto Kubernetes,
+      configure ingress,
+      secrets,
+      autoscaling,
+      health probes,
+      and rolling deployments.
+
+# ==========================================================
+# PHASE 7 — ADVANCED ENGINEERING
+# ==========================================================
+
+  - weekId: 2026-W49
+    phase: 7
+    topic: "Performance Engineering"
+    ledgerCoreTask: >
+      Profile the application,
+      identify CPU and memory bottlenecks,
+      optimize SQL,
+      optimize APIs,
+      and benchmark improvements.
+
+  - weekId: 2026-W50
+    phase: 7
+    topic: "Software Architecture"
+    ledgerCoreTask: >
+      Produce architecture decision records (ADRs),
+      compare modular monolith versus microservices,
+      and justify architectural decisions.
+
+  - weekId: 2026-W51
+    phase: 7
+    topic: "System Design"
+    ledgerCoreTask: >
+      Design LedgerCore for
+      10,000+ transfers per second,
+      estimate capacity,
+      identify bottlenecks,
+      and explain trade-offs.
+
+  - weekId: 2026-W52
+    phase: 7
+    topic: "Capstone"
+    ledgerCoreTask: >
+      Deliver a production-ready LedgerCore.
+      Complete documentation,
+      onboarding guide,
+      architecture diagrams,
+      operational runbooks,
+      deployment guide,
+      AI code review,
+      and final engineering presentation.
