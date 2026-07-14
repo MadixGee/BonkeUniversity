@@ -127,16 +127,16 @@ A production-grade ledger and payments platform supporting:
 
 ## Technologies
 
-Primary Stack
+**Primary Stack**
 
 - TypeScript
 - Node.js
 
-Secondary Stack
+**Secondary Stack**
 
 - Java
 
-Infrastructure
+**Infrastructure**
 
 - PostgreSQL
 - Redis
@@ -146,7 +146,7 @@ Infrastructure
 - GitHub Actions
 - Pulumi
 
-Cloud
+**Cloud**
 
 - Azure
 - AWS (concepts)
@@ -217,35 +217,35 @@ Every contribution must satisfy the project standards.
 
 ## Skills Developed
 
-Computer Science
+**Computer Science**
 
 - Data Structures
 - Algorithms
 - Networking
 - Operating Systems
 
-Backend Engineering
+**Backend Engineering**
 
 - APIs
 - Databases
 - Architecture
 - Security
 
-Distributed Systems
+**Distributed Systems**
 
 - Messaging
 - Caching
 - Consistency
 - Reliability
 
-Cloud
+**Cloud**
 
 - Docker
 - Kubernetes
 - Infrastructure as Code
 - CI/CD
 
-Operations
+**Operations**
 
 - Monitoring
 - Logging
