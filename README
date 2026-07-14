@@ -8,7 +8,7 @@ Rather than completing isolated exercises, learners incrementally build a produc
 
 ---
 
-# Goals
+## Goals
 
 By the end of this curriculum you will be able to:
 
@@ -27,11 +27,11 @@ By the end of this curriculum you will be able to:
 
 ---
 
-# Learning Philosophy
+## Learning Philosophy
 
 The curriculum follows several core principles.
 
-## Learn by Building
+### Learn by Building
 
 Every topic contributes to the same project.
 
@@ -41,7 +41,7 @@ Every week extends LedgerCore into a more capable production system.
 
 ---
 
-## Engineering over Frameworks
+### Engineering over Frameworks
 
 Frameworks change.
 
@@ -60,7 +60,7 @@ Frameworks are used only as tools.
 
 ---
 
-## Production First
+### Production First
 
 Every feature should be production ready.
 
@@ -75,7 +75,7 @@ Expect to write:
 
 ---
 
-## AI is a Reviewer, not a Replacement
+### AI is a Reviewer, not a Replacement
 
 AI is used to:
 
@@ -88,7 +88,7 @@ The learner remains responsible for engineering decisions.
 
 ---
 
-# Curriculum
+## Curriculum
 
 The course progresses through seven phases.
 
@@ -104,11 +104,11 @@ The course progresses through seven phases.
 
 ---
 
-# The Project
+## The Project
 
 Throughout the course you build a single system.
 
-## LedgerCore
+### LedgerCore
 
 A production-grade ledger and payments platform supporting:
 
@@ -125,7 +125,7 @@ A production-grade ledger and payments platform supporting:
 
 ---
 
-# Technologies
+## Technologies
 
 Primary Stack
 
@@ -153,7 +153,7 @@ Cloud
 
 ---
 
-# Weekly Structure
+## Weekly Structure
 
 Each week follows the same workflow.
 
@@ -170,7 +170,7 @@ Each week follows the same workflow.
 
 ---
 
-# Deliverables
+## Deliverables
 
 Every week produces:
 
@@ -184,7 +184,7 @@ Every week produces:
 
 ---
 
-# Repository Structure
+## Repository Structure
 
 ```
 docs/
@@ -201,7 +201,7 @@ scripts/
 
 ---
 
-# Engineering Standards
+## Engineering Standards
 
 Every contribution must satisfy the project standards.
 
@@ -215,7 +215,7 @@ Every contribution must satisfy the project standards.
 
 ---
 
-# Skills Developed
+## Skills Developed
 
 Computer Science
 
@@ -254,12 +254,12 @@ Operations
 
 ---
 
-# Intended Audience
+## Intended Audience
 
 This curriculum is intended for developers who already know how to write code and want to become strong backend engineers capable of designing, building, deploying, and operating production systems.
 
 ---
 
-# License
+## License
 
 MIT
