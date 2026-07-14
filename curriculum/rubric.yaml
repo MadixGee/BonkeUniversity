@@ -1,7 +1,7 @@
 categories:
-  architecture: 1
-  codeQuality: 1
-  testing: 1
-  documentation: 1
-  reflection: 1
-  engineeringJudgment: 1
+  architecture: 5
+  codeQuality: 5
+  testing: 5
+  documentation: 5
+  reflection: 5
+  engineeringJudgment: 5

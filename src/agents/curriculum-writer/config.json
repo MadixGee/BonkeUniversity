@@ -1,8 +1,0 @@
-{
-  "model": "openrouter/free",
-  "temperature": 0.7,
-  "maxTokens": 4000,
-  "schemaName": "week",
-  "requiredSkills": ["source-validation"],
-  "enforceVerifiedSources": true
-}
