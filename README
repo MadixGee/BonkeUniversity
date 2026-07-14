@@ -1,0 +1,265 @@
+# LedgerCore
+
+> Learn backend engineering by building a production-grade payments platform.
+
+LedgerCore is a hands-on backend engineering curriculum where every concept is learned by designing, implementing, testing, deploying, and operating a real software system.
+
+Rather than completing isolated exercises, learners incrementally build a production-grade double-entry ledger capable of processing financial transactions while applying modern software engineering practices used in industry.
+
+---
+
+# Goals
+
+By the end of this curriculum you will be able to:
+
+- Design scalable backend systems
+- Build REST APIs and network services
+- Model relational and event-driven data
+- Write production-quality TypeScript and Java
+- Apply software architecture patterns
+- Build distributed systems
+- Deploy applications using Docker and Kubernetes
+- Create CI/CD pipelines
+- Operate cloud-native applications
+- Secure backend systems
+- Monitor, profile, and optimize production services
+- Design systems capable of handling large-scale workloads
+
+---
+
+# Learning Philosophy
+
+The curriculum follows several core principles.
+
+## Learn by Building
+
+Every topic contributes to the same project.
+
+There are no throwaway assignments.
+
+Every week extends LedgerCore into a more capable production system.
+
+---
+
+## Engineering over Frameworks
+
+Frameworks change.
+
+Engineering principles remain.
+
+The curriculum prioritizes:
+
+- Computer Science
+- Software Engineering
+- System Design
+- Distributed Systems
+- Architecture
+- DevOps
+
+Frameworks are used only as tools.
+
+---
+
+## Production First
+
+Every feature should be production ready.
+
+Expect to write:
+
+- tests
+- documentation
+- architecture decision records
+- benchmarks
+- monitoring
+- deployment pipelines
+
+---
+
+## AI is a Reviewer, not a Replacement
+
+AI is used to:
+
+- review code
+- compare implementations
+- identify improvements
+- explain trade-offs
+
+The learner remains responsible for engineering decisions.
+
+---
+
+# Curriculum
+
+The course progresses through seven phases.
+
+| Phase | Focus |
+|--------|-------|
+| 1 | Foundations |
+| 2 | Data & Persistence |
+| 3 | Backend Engineering |
+| 4 | Distributed Systems |
+| 5 | Security & Reliability |
+| 6 | Cloud & DevOps |
+| 7 | Performance & System Design |
+
+---
+
+# The Project
+
+Throughout the course you build a single system.
+
+## LedgerCore
+
+A production-grade ledger and payments platform supporting:
+
+- Accounts
+- Transfers
+- Double-entry bookkeeping
+- Balance calculations
+- Transaction history
+- Event publishing
+- Authentication
+- Observability
+- Distributed deployment
+- Cloud infrastructure
+
+---
+
+# Technologies
+
+Primary Stack
+
+- TypeScript
+- Node.js
+
+Secondary Stack
+
+- Java
+
+Infrastructure
+
+- PostgreSQL
+- Redis
+- Kafka
+- Docker
+- Kubernetes
+- GitHub Actions
+- Pulumi
+
+Cloud
+
+- Azure
+- AWS (concepts)
+
+---
+
+# Weekly Structure
+
+Each week follows the same workflow.
+
+1. Study
+2. Research
+3. Design
+4. Implement
+5. Test
+6. Benchmark
+7. Deploy
+8. Document
+9. Review
+10. Reflect
+
+---
+
+# Deliverables
+
+Every week produces:
+
+- Working software
+- Tests
+- Documentation
+- ADRs
+- Benchmarks
+- Diagrams
+- Pull Requests
+
+---
+
+# Repository Structure
+
+```
+docs/
+architecture/
+adr/
+assignments/
+projects/
+ledger-core/
+src/
+tests/
+scripts/
+.github/
+```
+
+---
+
+# Engineering Standards
+
+Every contribution must satisfy the project standards.
+
+- All tests pass
+- Static analysis passes
+- Formatting passes
+- Documentation updated
+- ADR written where applicable
+- Performance measured
+- Security considered
+
+---
+
+# Skills Developed
+
+Computer Science
+
+- Data Structures
+- Algorithms
+- Networking
+- Operating Systems
+
+Backend Engineering
+
+- APIs
+- Databases
+- Architecture
+- Security
+
+Distributed Systems
+
+- Messaging
+- Caching
+- Consistency
+- Reliability
+
+Cloud
+
+- Docker
+- Kubernetes
+- Infrastructure as Code
+- CI/CD
+
+Operations
+
+- Monitoring
+- Logging
+- Tracing
+- Incident Response
+
+---
+
+# Intended Audience
+
+This curriculum is intended for developers who already know how to write code and want to become strong backend engineers capable of designing, building, deploying, and operating production systems.
+
+---
+
+# License
+
+MIT
